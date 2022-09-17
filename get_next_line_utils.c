@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/14 13:57:09 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/17 14:44:26 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	read_file(fd, buffer)
 {
 	read(fd, placeholder, BUFFER_SIZE);
+	
 
 }
 

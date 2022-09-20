@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/17 17:50:53 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/18 14:02:47 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	read_file(int fd, char *stash,  char buffer)
 {
 	int		safeguard;
 	char	BUFFER_SIZE;
+	char	temp;
+	
 	while (safeguard != 0)
 	{
 		safeguard == read(fd, buffer, BUFFER_SIZE);
@@ -28,16 +30,20 @@ char	read_file(int fd, char *stash,  char buffer)
 				return (NULL);
 			}
 		stash = strjoin(stash, buffer);
-
+		if ((temp = nl_checker(stash)) != NULL)
+			{
+				return_line(temp, stash);
+				
+			}
 	}
-
-	
-
 }
 
-int	return_line(int temp)
+int	return_line(int temp, char *stash)
 {
+	char	test;
 
+	test = (char*)malloc(temp);
+	
 }
 
 int	save_leftovers(int temp)
@@ -53,7 +59,7 @@ char	*nl_checker(const char *s)
 	while (s[tally] != '\0')
 	{
 		if (s[tally] == '\n')
-			return ((char *)s + tally);
+			return (tally + 1);
 		tally++;
 	}
 	return (NULL);

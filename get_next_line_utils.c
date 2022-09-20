@@ -6,26 +6,96 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/17 14:44:26 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/20 18:00:03 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stddef.h>
+#include <string.h>
 
-
-int	read_file(fd, buffer)
+char	*read_file(int fd, char *stash, char *buffer)
 {
-	read(fd, placeholder, BUFFER_SIZE);
-	
+	int		safeguard;
+	int		cntr;
+	char	*ret;
 
+	safeguard = 1;
+	while (safeguard > 0)
+	{
+		safeguard = read(fd, buffer, BUFFER_SIZE);
+		if (safeguard == -1)
+		{
+			free(stash);
+			return (NULL);
+		}
+		buffer[safeguard] = '\0';
+		stash = strcat(stash, buffer);
+		cntr = nl_checker(stash);
+		if (cntr != '\0')
+		{
+			ret = return_line(cntr, stash);
+			save_leftovers(cntr, stash);
+			return (ret);
+		}
+	}
+	ret = return_line(cntr, stash);
+	return (ret);
 }
 
-int	return_line(int temp)
+char	*return_line(int cntr, char *stash)
 {
+	char	*test;
+	int		tally;
 
+	test = malloc(cntr);
+	tally = 0;
+	while (tally > cntr)
+	{
+		test[tally] = stash[tally];
+		tally++;
+	}
+	return (test);
 }
 
-int	save_leftovers(int temp)
+void	save_leftovers(int cntr, char *stash)
 {
+	int		tally;
+	char	*temp;
+	tally = strlen(stash);
+	temp = malloc(tally);
+	tally -= cntr;
+	cntr ++;
+	while (tally != 0)
+	{
+		temp[cntr] = stash[cntr];
+		cntr++;
+		tally--;
+	}
+	strcpy(stash, temp);
+}
 
+int	nl_checker(const char *s)
+{
+	int	tally;
+
+	tally = 0;
+	while (s[tally] != '\0')
+	{
+		if (s[tally] == '\n')
+			return (tally + 1);
+		tally++;
+	}
+	return ('\0');
+}
+
+void	free_strings(char **string)
+{
+	if (string != NULL && *string != '\0')
+	{
+		free(*string);
+		*string = NULL;
+	}
 }

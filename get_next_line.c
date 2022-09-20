@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/18 14:02:47 by owen          ########   odam.nl         */
+/*   Updated: 2022/09/20 18:13:47 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,25 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stddef.h>
-
-char	read_file(int fd, char *stash,  char buffer)
-{
-	int		safeguard;
-	char	BUFFER_SIZE;
-	char	temp;
-	
-	while (safeguard != 0)
-	{
-		safeguard == read(fd, buffer, BUFFER_SIZE);
-		if (safeguard == -1)
-			{
-				free(stash);
-				return (NULL);
-			}
-		stash = strjoin(stash, buffer);
-		if ((temp = nl_checker(stash)) != NULL)
-			{
-				return_line(temp, stash);
-				
-			}
-	}
-}
-
-int	return_line(int temp, char *stash)
-{
-	char	test;
-
-	test = (char*)malloc(temp);
-	
-}
-
-int	save_leftovers(int temp)
-{
-
-}
-
-char	*nl_checker(const char *s)
-{
-	int	tally;
-
-	tally = 0;
-	while (s[tally] != '\0')
-	{
-		if (s[tally] == '\n')
-			return (tally + 1);
-		tally++;
-	}
-	return (NULL);
-}
+#include <string.h>
 
 char	*get_next_line(int fd)
 {
-	static char	*stash = NULL;
-	int			BUFFER_SIZE = 42;
-	char		buffer[BUFFER_SIZE + 1];
+	static char	*stash[1024];
+	char		*buffer;
 	char		*ret;
 
-	if (fd < 0 || fd > 1024 || buffer <= 0)
+	buffer = malloc(sizeof * buffer * (BUFFER_SIZE + 1));
+	if (fd < 0 || fd > 1024 || !buffer || buffer <= 0)
 		return (NULL);
-	if (!stash)
+	stash[fd] = malloc(sizeof(char));
+	if (!stash[fd])
 	{
-		stash = (char*)malloc(sizeof(char));
-		if (!stash)
-			return (NULL);
-		*stash = "\0";
+		return (NULL);
+		stash[fd] = "\0";
 	}
-	read_file(fd, *stash, buffer);
+	ret = read_file(fd, stash[fd], buffer);
+	free_strings (&buffer);
+	free_strings (&stash[fd]);
+	return (ret);
 }

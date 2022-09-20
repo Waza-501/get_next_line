@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.h                                    :+:    :+:            */
+/*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/07 10:56:59 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/20 16:29:10 by ohearn        ########   odam.nl         */
+/*   Created: 2022/09/20 16:38:24 by ohearn        #+#    #+#                 */
+/*   Updated: 2022/09/20 16:43:31 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 
-# include <unistd.h>
+int	main(int argc, char **argv)
+{
+	int		fd;
+	char	*line;
 
-char	*get_next_line(int fd);
-char	*read_file(int fd, char *stash, char *buffer);
-char	*return_line(int cntr, char *stash);
-void	save_leftovers(int cntr, char *stash);
-int		nl_checker(const char *s);
-void	free_strings(char **string);
-
-#endif
+	(void)argc;
+	fd = open(argv[1], O_RDONLY);
+	line = "";
+	while (line != NULL)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+	}
+	fd = close(fd);
+	return (0);
+}

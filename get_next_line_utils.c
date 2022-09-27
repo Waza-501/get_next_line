@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/26 15:24:42 by owen          ########   odam.nl         */
+/*   Updated: 2022/09/27 20:10:52 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,17 @@ char	*return_line(int cntr, char *stash)
 void	save_leftovers(int cntr, char *stash)
 {
 	int		tally;
+	int		new;
 	char	*temp;
+
 	tally = strlen(stash);
 	temp = malloc(tally);
-	tally -= cntr;
-	cntr ++;
-	while (tally != 0)
+	new = 0;
+	while (cntr != tally)
 	{
-		temp[cntr] = stash[cntr];
+		temp[new] = stash[cntr];
 		cntr++;
-		tally--;
+		new++;
 	}
 	strcpy(stash, temp);
 }
@@ -93,7 +94,7 @@ int	nl_checker(const char *s)
 
 void	free_strings(char **string)
 {
-	if (string != NULL)
+	if (string != NULL && *string != '\0')
 	{
 		free(*string);
 		*string = NULL;

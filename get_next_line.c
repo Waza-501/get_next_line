@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/20 18:13:47 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/25 18:19:09 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	char		*ret;
 
 	buffer = malloc(sizeof * buffer * (BUFFER_SIZE + 1));
-	if (fd < 0 || fd > 1024 || !buffer || buffer <= 0)
+	if (fd < 0 || fd > 1024 || !buffer)
 		return (NULL);
 	stash[fd] = malloc(sizeof(char));
 	if (!stash[fd])

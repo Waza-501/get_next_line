@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/20 18:00:03 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/26 15:24:42 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*return_line(int cntr, char *stash)
 
 	test = malloc(cntr);
 	tally = 0;
-	while (tally > cntr)
+	while (tally < cntr)
 	{
 		test[tally] = stash[tally];
 		tally++;
@@ -93,7 +93,7 @@ int	nl_checker(const char *s)
 
 void	free_strings(char **string)
 {
-	if (string != NULL && *string != '\0')
+	if (string != NULL)
 	{
 		free(*string);
 		*string = NULL;

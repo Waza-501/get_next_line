@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:59 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/27 16:49:34 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/28 17:27:14 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*read_file(int fd, char *stash, char *buffer);
 char	*return_line(int cntr, char *stash);
 void	save_leftovers(int cntr, char *stash);
 int		nl_checker(const char *s);
-void	free_strings(char **string);
+void	free_strings(char **string, char **string2, char **string3);
+void	read_line(int fd, char *stash, char *line);
 
 #endif

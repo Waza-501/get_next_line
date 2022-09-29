@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 16:38:24 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/28 16:03:38 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/29 19:39:10 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int argc, char **argv)
 	{
 		line = get_next_line(fd);
 		printf("%s", line);
-		free(line);
-		line = "";
+		if (line != NULL)
+			free(line);
 	}
 	fd = close(fd);
 	return (0);

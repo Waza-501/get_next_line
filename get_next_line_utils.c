@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/28 17:40:22 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/29 19:37:34 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,83 +16,96 @@
 #include <stddef.h>
 #include <string.h>
 
-char	*read_file(int fd, char *stash, char *buffer)
+char	*return_line(int cntr, char *temp)
 {
-	int		safeguard;
-	int		cntr;
-	char	*ret;
-
-	safeguard = 1;
-	while (safeguard > 0)
-	{
-		safeguard = read(fd, buffer, BUFFER_SIZE);
-		if (safeguard == -1)
-		{
-			free_strings(&buffer, &stash, 0);
-			return (NULL);
-		}
-		buffer[safeguard] = '\0';
-		stash = strcat(stash, buffer);
-		cntr = nl_checker(stash);
-		if (cntr != '\0')
-		{
-			ret = return_line(cntr, stash);
-			save_leftovers(cntr, stash);
-			return (ret);
-		}
-	}
-	ret = return_line(cntr, stash);
-	return (ret);
-}
-
-char	*return_line(int cntr, char *stash)
-{
-	char	*test;
+	char	*line;
 	int		tally;
 
-	test = malloc(cntr);
-	if (!test)
+	line = malloc(cntr);
+	if (!line)
 		return (NULL);
 	tally = 0;
 	while (tally < cntr)
 	{
-		test[tally] = stash[tally];
+		line[tally] = temp[tally];
 		tally++;
 	}
-	return (test);
+	return (line);
 }
 
-void	save_leftovers(int cntr, char *stash)
+char	*save_leftovers(int cntr, char *bulk)
 {
 	int		tally;
 	int		new;
-	char	*temp;
+	char	*stash;
 
-	tally = strlen(stash);
-	temp = malloc(tally);
-	if (!temp)
-		return ;
+	tally = strlen(bulk);
+	stash = malloc(tally - cntr + 1);
+	if (!stash)
+		return (NULL);
 	new = 0;
-	while (cntr != tally)
+	while (bulk[new + cntr])
 	{
-		temp[new] = stash[cntr];
-		cntr++;
+		stash[new] = bulk[new + cntr];
 		new++;
 	}
-	strcpy(stash, temp);
-	free_strings(&temp, 0, 0);
+	stash[new] = 0;
+	return (stash);
 }
 
-int	nl_checker(const char *s)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	tally;
+	char	*new_string;
+	int		tally;	
+
+	if (!s1 || !s2)
+		return (NULL);
+	new_string = malloc(strlen (s1) + strlen (s2) + 1);
+	tally = 0;
+	if (!new_string)
+		return (NULL);
+	while (*s1)
+	{
+		new_string[tally] = *s1;
+		tally++;
+		s1++;
+	}
+	while (*s2)
+	{
+		new_string[tally] = *s2;
+		tally++;
+		s2++;
+	}
+	new_string[tally] = 0;
+	return (new_string);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*copy;
+	int		tally;
+
+	copy = malloc(strlen(s1) + 1);
+	if (!copy)
+		return (NULL);
+	tally = 0;
+	while (s1[tally] != '\0')
+	{
+		copy[tally] = s1[tally];
+		++tally;
+	}
+	copy[tally] = 0;
+	return (copy);
+}
+
+int	ft_strrchr(const char *s)
+{
+	int		tally;
 
 	tally = 0;
-	while (s[tally] != '\0')
-	{
-		if (s[tally] == '\n')
-			return (tally + 1);
+	while (s[tally] != '\n' && s[tally] != '\0')
 		tally++;
-	}
-	return ('\0');
+	if (s[tally] == '\n' || s[tally] == '\0')
+		return (tally + 1);
+	return (0);
 }

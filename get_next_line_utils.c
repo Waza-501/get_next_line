@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:13:44 by owen          ########   odam.nl         */
+/*   Updated: 2022/10/03 18:35:40 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@ char	*return_line(int cntr, char *temp)
 	char	*line;
 	int		tally;
 
+	if (temp[cntr] == '\0')
+		cntr--;
 	line = malloc(cntr + 1);
 	if (!line)
 		return (NULL);
 	tally = 0;
-	while (tally < cntr)
+	while (temp[tally] != '\n' && temp[tally] != '\0')
 	{
 		line[tally] = temp[tally];
 		tally++;
 	}
-	line[tally] = '\0';
+	line[tally] = temp[tally];
+	if (line[tally] != '\0')
+	{
+		tally++;
+		line[tally] = '\0';
+	}
 	return (line);
 }
 
@@ -95,11 +102,11 @@ char	*ft_strdup(const char *s1)
 		copy[tally] = s1[tally];
 		++tally;
 	}
-	copy[tally] = 0;
+	copy[tally] = '\0';
 	return (copy);
 }
 
-int	ft_strrchr(const char *s)
+int	ft_strchr(const char *s)
 {
 	int		tally;
 

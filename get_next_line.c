@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/03 15:43:23 by owen          ########   odam.nl         */
+/*   Updated: 2022/10/03 18:07:26 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	read_line(int fd, char **stash, char **temp)
 		if (nl_checker(*stash))
 			break ;
 	}
+	free_strings(&buffer, 0, 0);
 	return ;
 }
 
@@ -84,7 +85,7 @@ char	*print_line(char **stash, char **temp)
 
 	*temp = ft_strdup(*stash);
 	free_strings(stash, 0, 0);
-	cntr = ft_strrchr(*temp);
+	cntr = ft_strchr(*temp);
 	if (cntr == 0)
 		return (NULL);
 	*stash = save_leftovers(cntr, *temp);

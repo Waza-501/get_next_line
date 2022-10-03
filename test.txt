@@ -1,1 +1,2 @@
 A single line of text.
+I am purposely generating a core dump from a C++ application. I'm writing using VSCode. I cannot figure out how to debug the core dump.

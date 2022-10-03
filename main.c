@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 16:38:24 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/29 19:39:10 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/09/30 15:41:17 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	main(int argc, char **argv)
 			free(line);
 	}
 	fd = close(fd);
+	system("leaks a.out");
 	return (0);
 }

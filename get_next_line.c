@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/29 19:13:22 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/03 15:43:23 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 
 void	free_strings(char **string, char **string2, char **string3)
 {
-	if (string != NULL && *string != '\0')
+	if (string != NULL && **string != '\0')
 	{
 		free(*string);
 		*string = NULL;
 	}
-	if (string2 != NULL && *string2 != '\0')
+	if (string2 != NULL && **string2 != '\0')
 	{
 		free(*string2);
 		*string2 = NULL;
 	}
-	if (string3 != NULL && *string3 != '\0')
+	if (string3 != NULL && **string3 != '\0')
 	{
 		free(*string3);
 		*string3 = NULL;
@@ -54,7 +54,7 @@ void	read_line(int fd, char **stash, char **temp)
 	char	*buffer;
 	int		err;
 
-	buffer = malloc(sizeof* buffer * (BUFFER_SIZE + 1));
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return ;
 	err = 1;
@@ -74,7 +74,7 @@ void	read_line(int fd, char **stash, char **temp)
 		if (nl_checker(*stash))
 			break ;
 	}
-	free_strings(&buffer, 0, 0);
+	return ;
 }
 
 char	*print_line(char **stash, char **temp)
@@ -85,6 +85,8 @@ char	*print_line(char **stash, char **temp)
 	*temp = ft_strdup(*stash);
 	free_strings(stash, 0, 0);
 	cntr = ft_strrchr(*temp);
+	if (cntr == 0)
+		return (NULL);
 	*stash = save_leftovers(cntr, *temp);
 	save = return_line(cntr, *temp);
 	free_strings(temp, 0, 0);
@@ -108,7 +110,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	read_line(fd, &stash[fd], &temp);
-	if (stash[fd] != NULL && *stash[fd] != '\0')
+	if (stash[fd] != NULL && *(stash[fd]) != '\0')
 		line = print_line(&stash[fd], &temp);
 	if (!line || *line == '\0')
 	{

@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/09/29 19:37:34 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/03 16:13:44 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*return_line(int cntr, char *temp)
 	char	*line;
 	int		tally;
 
-	line = malloc(cntr);
+	line = malloc(cntr + 1);
 	if (!line)
 		return (NULL);
 	tally = 0;
@@ -30,6 +30,7 @@ char	*return_line(int cntr, char *temp)
 		line[tally] = temp[tally];
 		tally++;
 	}
+	line[tally] = '\0';
 	return (line);
 }
 
@@ -40,7 +41,7 @@ char	*save_leftovers(int cntr, char *bulk)
 	char	*stash;
 
 	tally = strlen(bulk);
-	stash = malloc(tally - cntr + 1);
+	stash = malloc(sizeof(char) * ((tally - cntr) + 1));
 	if (!stash)
 		return (NULL);
 	new = 0;
@@ -49,7 +50,7 @@ char	*save_leftovers(int cntr, char *bulk)
 		stash[new] = bulk[new + cntr];
 		new++;
 	}
-	stash[new] = 0;
+	stash[new] = '\0';
 	return (stash);
 }
 
@@ -103,9 +104,12 @@ int	ft_strrchr(const char *s)
 	int		tally;
 
 	tally = 0;
-	while (s[tally] != '\n' && s[tally] != '\0')
-		tally++;
-	if (s[tally] == '\n' || s[tally] == '\0')
-		return (tally + 1);
+	while (s[tally])
+	{
+		while (s[tally] != '\n' && s[tally] != '\0')
+			tally++;
+		if (s[tally] == '\n' || s[tally] == '\0')
+			return (tally + 1);
+	}
 	return (0);
 }

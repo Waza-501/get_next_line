@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/03 18:07:26 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/03 19:53:10 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 
 void	free_strings(char **string, char **string2, char **string3)
 {
-	if (string != NULL && **string != '\0')
+	if (string != NULL && *string != '\0')
 	{
 		free(*string);
 		*string = NULL;
 	}
-	if (string2 != NULL && **string2 != '\0')
+	if (string2 != NULL && *string2 != '\0')
 	{
 		free(*string2);
 		*string2 = NULL;
 	}
-	if (string3 != NULL && **string3 != '\0')
+	if (string3 != NULL && *string3 != '\0')
 	{
 		free(*string3);
 		*string3 = NULL;
@@ -75,7 +75,6 @@ void	read_line(int fd, char **stash, char **temp)
 			break ;
 	}
 	free_strings(&buffer, 0, 0);
-	return ;
 }
 
 char	*print_line(char **stash, char **temp)

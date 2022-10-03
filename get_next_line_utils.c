@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/03 18:35:40 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/03 19:27:26 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ char	*return_line(int cntr, char *temp)
 	char	*line;
 	int		tally;
 
-	if (temp[cntr] == '\0')
-		cntr--;
 	line = malloc(cntr + 1);
 	if (!line)
 		return (NULL);
@@ -33,11 +31,8 @@ char	*return_line(int cntr, char *temp)
 		tally++;
 	}
 	line[tally] = temp[tally];
-	if (line[tally] != '\0')
-	{
-		tally++;
-		line[tally] = '\0';
-	}
+	tally++;
+	line[tally] = '\0';
 	return (line);
 }
 
@@ -84,7 +79,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		tally++;
 		s2++;
 	}
-	new_string[tally] = 0;
+	new_string[tally] = '\0';
 	return (new_string);
 }
 

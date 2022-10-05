@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.c                                    :+:    :+:            */
+/*   get_next_line_bonus.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/05 16:40:03 by ohearn        ########   odam.nl         */
+/*   Created: 2022/10/05 14:28:30 by ohearn        #+#    #+#                 */
+/*   Updated: 2022/10/05 15:27:09 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdlib.h>
+#include <unistd.h>
+#include <stddef.h>
 
 void	free_strings(char **string, char **string2, char **string3)
 {
@@ -32,14 +34,18 @@ void	free_strings(char **string, char **string2, char **string3)
 	}
 }
 
-size_t	ft_strlen(const	char *s)
+int	nl_checker(const char *s)
 {
-	size_t	length;
+	int	tally;
 
-	length = 0;
-	while (s[length] != '\0')
-		length++;
-	return (length);
+	tally = 0;
+	while (s[tally])
+	{
+		if (s[tally] == '\n')
+			return (1);
+		tally++;
+	}
+	return (0);
 }
 
 void	read_line(int fd, char **stash, char **temp)
@@ -64,7 +70,7 @@ void	read_line(int fd, char **stash, char **temp)
 		free_strings(stash, 0, 0);
 		*stash = ft_strjoin(*temp, buffer);
 		free_strings(temp, 0, 0);
-		if (ft_strchr(*stash))
+		if (nl_checker(*stash))
 			break ;
 	}
 	free_strings(&buffer, 0, 0);

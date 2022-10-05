@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.h                                    :+:    :+:            */
+/*   get_next_line_bonus.h                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/07 10:56:59 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/05 16:41:01 by ohearn        ########   odam.nl         */
+/*   Created: 2022/10/05 14:32:56 by ohearn        #+#    #+#                 */
+/*   Updated: 2022/10/05 15:11:15 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <unistd.h>
 
@@ -25,6 +25,6 @@ char	*print_line(char **stash, char **temp);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 int		ft_strchr(const char *s);
-size_t	ft_strlen(const	char *s);
+int		nl_checker(const char *s);
 
 #endif

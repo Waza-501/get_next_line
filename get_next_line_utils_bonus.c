@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line_utils.c                              :+:    :+:            */
+/*   get_next_line_utils_bonus.c                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/05 16:40:24 by ohearn        ########   odam.nl         */
+/*   Created: 2022/10/05 14:29:12 by ohearn        #+#    #+#                 */
+/*   Updated: 2022/10/05 14:33:14 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdlib.h>
+#include <unistd.h>
+#include <stddef.h>
 #include <string.h>
 
 char	*return_line(int cntr, char *temp)
@@ -40,7 +42,7 @@ char	*save_leftovers(int cntr, char *bulk)
 	int		new;
 	char	*stash;
 
-	tally = ft_strlen(bulk);
+	tally = strlen(bulk);
 	stash = malloc(sizeof(char) * ((tally - cntr) + 1));
 	if (!stash)
 		return (NULL);
@@ -61,7 +63,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	new_string = malloc(ft_strlen (s1) + ft_strlen (s2) + 1);
+	new_string = malloc(strlen (s1) + strlen (s2) + 1);
 	tally = 0;
 	if (!new_string)
 		return (NULL);
@@ -86,7 +88,7 @@ char	*ft_strdup(const char *s1)
 	char	*copy;
 	int		tally;
 
-	copy = malloc(ft_strlen(s1) + 1);
+	copy = malloc(strlen(s1) + 1);
 	if (!copy)
 		return (NULL);
 	tally = 0;

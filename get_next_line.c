@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/05 16:40:03 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/05 17:33:11 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	read_line(int fd, char **stash, char **temp)
 		free_strings(stash, 0, 0);
 		*stash = ft_strjoin(*temp, buffer);
 		free_strings(temp, 0, 0);
-		if (ft_strchr(*stash))
+		if (ft_strchr(*stash) == 0)
 			break ;
 	}
 	free_strings(&buffer, 0, 0);

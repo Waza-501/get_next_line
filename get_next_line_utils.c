@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/03 19:27:26 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/04 01:01:51 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,9 @@ int	ft_strchr(const char *s)
 	{
 		while (s[tally] != '\n' && s[tally] != '\0')
 			tally++;
-		if (s[tally] == '\n' || s[tally] == '\0')
+		if (s[tally] == '\n' && s[tally] != '\0')
 			return (tally + 1);
+		return (tally);
 	}
 	return (0);
 }

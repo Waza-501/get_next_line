@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:59 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/10 14:36:11 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/10 15:14:06 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ char	*print_line(char **stash, char **temp);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const	char *s);
+int		nl_checker(const char *s);
 
 #endif

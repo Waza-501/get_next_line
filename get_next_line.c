@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/10 13:39:41 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/12 16:18:30 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ void	read_line(int fd, char **stash, char **temp)
 		}
 		buffer[err] = '\0';
 		*temp = ft_strdup(*stash);
-		free_strings(stash, 0, 0);
+		free_strings(stash, NULL, NULL);
 		*stash = ft_strjoin(*temp, buffer);
-		free_strings(temp, 0, 0);
+		free_strings(temp, NULL, NULL);
 		if (nl_checker(*stash))
 			break ;
 	}
-	free_strings(&buffer, 0, 0);
+	free_strings(&buffer, NULL, NULL);
 }
 
 char	*print_line(char **stash, char **temp)
@@ -81,10 +81,10 @@ char	*print_line(char **stash, char **temp)
 
 	cntr = 0;
 	*temp = ft_strdup(*stash);
-	free_strings(stash, 0, 0);
+	free_strings(stash, NULL, NULL);
 	*stash = save_leftovers(cntr, *temp);
 	save = return_line(cntr, *temp);
-	free_strings(temp, 0, 0);
+	free_strings(temp, NULL, NULL);
 	return (save);
 }
 
@@ -101,9 +101,9 @@ char	*get_next_line(int fd)
 	if (!stash[fd])
 	{
 		stash[fd] = malloc(sizeof(char));
-		stash[fd][0] = '\0';
 		if (!stash[fd])
 			return (NULL);
+		stash[fd][0] = '\0';
 	}
 	read_line(fd, &stash[fd], &temp);
 	if (stash[fd] != NULL && *(stash[fd]) != '\0')

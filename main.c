@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 16:38:24 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/05 17:43:35 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/14 14:14:53 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	main(int argc, char **argv)
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
 		printf("%s", line);
 		if (line != NULL)
 		 	free(line);

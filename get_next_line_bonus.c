@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:57 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/12 16:18:44 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/14 14:14:42 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	nl_checker(const char *s)
 	int	tally;
 
 	tally = 0;
+	if (!s)
+		return (1);
 	while (s[tally])
 	{
 		if (s[tally] == '\n')

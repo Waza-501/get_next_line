@@ -1,6 +1,0 @@
-I am purposely generating a core dump from a C++ application. I'm writing using VSCode. I cannot figure out how to debug the core dump.
-Has anyone had any experience with this they'd be willing to share?
-***** UPDATE ***** I believe I have it working now.
-I created a second debug configuration for core files.
-I needed to add the "coreDumpPath" option that pointed to the dump file generated.
-I also needed to remove preLaunchTask option that would always build a new executable.

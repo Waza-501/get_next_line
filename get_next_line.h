@@ -6,12 +6,16 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:59 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/10 15:14:20 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/11/11 13:48:05 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 
 # include <unistd.h>
 

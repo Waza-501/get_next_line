@@ -6,7 +6,7 @@
 /*   By: ohearn <ohearn@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/07 10:56:55 by ohearn        #+#    #+#                 */
-/*   Updated: 2022/10/14 14:14:00 by ohearn        ########   odam.nl         */
+/*   Updated: 2022/10/17 11:24:40 by ohearn        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	// new_string = malloc(ft_strlen (s1) + ft_strlen (s2) + 1);
-	new_string = NULL;
+	new_string = malloc(ft_strlen (s1) + ft_strlen (s2) + 1);
 	tally = 0;
 	if (!new_string)
 		return (NULL);

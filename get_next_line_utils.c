@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:19 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/04 13:14:48 by owen          ########   odam.nl         */
+/*   Updated: 2024/11/06 13:52:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_strchr(const char *s, int c)
 	int		i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i] && s[i] != '\0')
 	{
 		if (s[i] == (unsigned char)c)
 			return ((char *)s + i);

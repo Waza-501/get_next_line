@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/05 12:57:22 by owen          ########   odam.nl         */
+/*   Updated: 2024/11/06 13:06:36 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (read(fd, NULL, 0) == -1 || BUFFER_SIZE <= 0)
-		return (printf("FD_ERROR\n"),NULL);
+		return (NULL);
 	if (!remain)
 		remain = ft_calloc(1, sizeof(char));
 	if (!remain)
@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 	temp = NULL;
 	if (!ft_strchr(remain, '\n'))
 		remain = read_file(remain, temp, fd);
-	if (!remain || remain[0] == '\0')
+	if (remain == NULL || remain[0] == '\0')
 		return (free(remain), NULL);
 	line = find_line(remain);
 	if (!line)
@@ -123,7 +123,7 @@ int main(void)
 	int	count;
 	char *gnl;
 
-	fd = open("get_next_line_utils.c", O_RDONLY);
+	fd = open("empty.txt", O_RDONLY);
 	count = 0;
 	while (true)
 	{

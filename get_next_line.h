@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:58:05 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/04 13:14:56 by owen          ########   odam.nl         */
+/*   Updated: 2024/11/07 12:07:34 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #  define BUFFER_SIZE 32
 # endif
 
+void	free_mem(char **mem);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);

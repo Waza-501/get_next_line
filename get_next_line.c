@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/06 13:06:36 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/07 15:55:16 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,20 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+void	free_mem(char **mem)
+{
+	if (*mem != NULL)
+		free(*mem);
+	*mem = NULL;
+}
+
 static char	*find_leftovers(char *remain, char *temp, size_t size)
 {
 	int		i;
 
 	if (remain[size] == '\0')
 	{
-		free(remain);
+		free_mem(&remain);
 		return (NULL);
 	}
 	temp = ft_calloc(ft_strlen(remain) - size + 1, sizeof(char));
@@ -34,9 +41,9 @@ static char	*find_leftovers(char *remain, char *temp, size_t size)
 		i++;
 		size++;
 	}
-	free(remain);
+	free_mem(&remain);
 	remain = ft_strjoin("", temp);
-	free(temp);
+	free_mem(&temp);
 	return (remain);
 }
 
@@ -80,16 +87,18 @@ static char	*read_file(char *remain, char *temp, int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (free(buffer), NULL);
+			return (free_mem(&buffer), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(remain, buffer);
-		free(remain);
+		if (!temp)
+			return (free_mem(&remain), NULL);
+		free_mem(&remain);
 		remain = ft_strjoin("", temp);
-		free(temp);
+		free_mem(&temp);
 		if (ft_strchr(remain, '\n'))
 			break ;
 	}
-	free(buffer);
+	free_mem(&buffer);
 	return (remain);
 }
 
@@ -109,10 +118,10 @@ char	*get_next_line(int fd)
 	if (!ft_strchr(remain, '\n'))
 		remain = read_file(remain, temp, fd);
 	if (remain == NULL || remain[0] == '\0')
-		return (free(remain), NULL);
+		return (free_mem(&remain), NULL);
 	line = find_line(remain);
 	if (!line)
-		return (NULL);
+		return (free_mem(&remain), NULL);
 	remain = find_leftovers(remain, temp, ft_strlen(line));
 	return (line);
 }
@@ -123,7 +132,7 @@ int main(void)
 	int	count;
 	char *gnl;
 
-	fd = open("empty.txt", O_RDONLY);
+	fd = open("dracula.txt", O_RDONLY);
 	count = 0;
 	while (true)
 	{

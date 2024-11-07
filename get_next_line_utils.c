@@ -6,17 +6,20 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:19 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/06 13:52:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/07 15:54:04 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 size_t	ft_strlen(const char *s)
 {
 	size_t	tally;
 
 	tally = 0;
+	if (!s)
+		return (0);
 	while (s[tally])
 		tally++;
 	return (tally);
@@ -27,19 +30,17 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	size;
 	char	*combine;
 
-	if (!s1 || !s2)
-		return (NULL);
 	size = 0;
 	combine = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) +1);
 	if (!combine)
 		return (NULL);
-	while (*s1)
+	while (s1 != NULL && *s1)
 	{
 		combine[size] = *s1;
 		s1++;
 		size++;
 	}
-	while (*s2)
+	while (s2 != NULL && *s2)
 	{
 		combine[size] = *s2;
 		s2++;
@@ -54,6 +55,8 @@ char	*ft_strchr(const char *s, int c)
 	int		i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i] && s[i] != '\0')
 	{
 		if (s[i] == (unsigned char)c)

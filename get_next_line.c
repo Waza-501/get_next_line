@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/20 14:29:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/20 14:53:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 
 void	free_mem(char **mem)
 {
-	if (mem != NULL)
+	if (mem && *mem)
+	{
 		free(*mem);
-	*mem = NULL;
+		*mem = NULL;
+	}
 }
 
 static char	*find_leftovers(char *remain, char *temp, size_t size)
@@ -74,20 +76,14 @@ static char	*find_line(char *remain)
 	return (line);
 }
 
-static char	*read_file(char *remain, char *temp, int fd)
+static char	*read_file(char *remain, char *buffer, int fd)
 {
-	char	*buffer;
+	char	*temp;
 	int		bytes_read;
 
-	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!buffer)
-		return (NULL);
-	bytes_read = 1;
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
-			return (free_mem(&buffer), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(remain, buffer);
 		if (!temp)
@@ -97,10 +93,40 @@ static char	*read_file(char *remain, char *temp, int fd)
 		free_mem(&temp);
 		if (ft_strchr(remain, '\n'))
 			break ;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
-	free_mem(&buffer);
+	if (bytes_read < 0 && !remain && remain[0] == '\0')
+		return (free_mem(&remain), NULL);
 	return (remain);
 }
+
+// static char	*read_file(char *remain, char *temp, int fd)
+// {
+// 	char	*buffer;
+// 	int		bytes_read;
+
+// 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+// 	if (!buffer)
+// 		return (NULL);
+// 	bytes_read = 1;
+// 	while (bytes_read > 0)
+// 	{
+// 		bytes_read = read(fd, buffer, BUFFER_SIZE);
+// 		if (bytes_read < 0)
+// 			return (free_mem(&buffer), NULL);
+// 		buffer[bytes_read] = '\0';
+// 		temp = ft_strjoin(remain, buffer);
+// 		if (!temp)
+// 			return (free_mem(&remain), NULL);
+// 		free_mem(&remain);
+// 		remain = ft_strjoin("", temp);
+// 		free_mem(&temp);
+// 		if (ft_strchr(remain, '\n'))
+// 			break ;
+// 	}
+// 	free_mem(&buffer);
+// 	return (remain);
+// }
 
 char	*get_next_line(int fd)
 {
@@ -114,9 +140,12 @@ char	*get_next_line(int fd)
 		remain = ft_calloc(1, sizeof(char));
 	if (!remain)
 		return (NULL);
-	temp = NULL;
+	temp = malloc(BUFFER_SIZE + 1);
+	if (!temp)
+		return (free_mem(&remain), NULL);
 	if (!ft_strchr(remain, '\n'))
 		remain = read_file(remain, temp, fd);
+	free(temp);
 	if (remain == NULL || remain[0] == '\0')
 		return (free_mem(&remain), NULL);
 	line = find_line(remain);

@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/20 14:22:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/20 14:29:39 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void	free_mem(char *mem)
+void	free_mem(char **mem)
 {
 	if (mem != NULL)
-		free(mem);
-	mem = NULL;
+		free(*mem);
+	*mem = NULL;
 }
 
 static char	*find_leftovers(char *remain, char *temp, size_t size)
@@ -28,7 +28,7 @@ static char	*find_leftovers(char *remain, char *temp, size_t size)
 
 	if (remain[size] == '\0')
 	{
-		free_mem(remain);
+		free_mem(&remain);
 		return (NULL);
 	}
 	temp = ft_calloc(ft_strlen(remain) - size + 1, sizeof(char));
@@ -41,9 +41,9 @@ static char	*find_leftovers(char *remain, char *temp, size_t size)
 		i++;
 		size++;
 	}
-	free_mem(remain);
+	free_mem(&remain);
 	remain = ft_strjoin("", temp);
-	free_mem(temp);
+	free_mem(&temp);
 	return (remain);
 }
 
@@ -87,18 +87,18 @@ static char	*read_file(char *remain, char *temp, int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (free_mem(buffer), NULL);
+			return (free_mem(&buffer), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(remain, buffer);
 		if (!temp)
-			return (free_mem(remain), NULL);
-		free_mem(remain);
+			return (free_mem(&remain), NULL);
+		free_mem(&remain);
 		remain = ft_strjoin("", temp);
-		free_mem(temp);
+		free_mem(&temp);
 		if (ft_strchr(remain, '\n'))
 			break ;
 	}
-	free_mem(buffer);
+	free_mem(&buffer);
 	return (remain);
 }
 
@@ -118,10 +118,10 @@ char	*get_next_line(int fd)
 	if (!ft_strchr(remain, '\n'))
 		remain = read_file(remain, temp, fd);
 	if (remain == NULL || remain[0] == '\0')
-		return (free_mem(remain), NULL);
+		return (free_mem(&remain), NULL);
 	line = find_line(remain);
 	if (!line)
-		return (free_mem(remain), NULL);
+		return (free_mem(&remain), NULL);
 	remain = find_leftovers(remain, temp, ft_strlen(line));
 	return (line);
 }

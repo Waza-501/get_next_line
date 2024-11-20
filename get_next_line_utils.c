@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:19 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/07 15:54:04 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/20 13:51:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ size_t	ft_strlen(const char *s)
 	size_t	tally;
 
 	tally = 0;
-	if (!s)
-		return (0);
-	while (s[tally])
+	while (*s && s[tally])
 		tally++;
 	return (tally);
 }
@@ -31,6 +29,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*combine;
 
 	size = 0;
+	printf("check for strjoin\n");
 	combine = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) +1);
 	if (!combine)
 		return (NULL);
@@ -95,6 +94,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 			return (NULL);
 	}
 	new = (char *)malloc(nmemb * size);
+	printf("allocated memory\n");
 	if (!new)
 		return (NULL);
 	ft_bzero(new, nmemb * size);

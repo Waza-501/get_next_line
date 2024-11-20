@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/07 15:55:16 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/20 13:43:25 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_mem(char **mem)
 	if (*mem != NULL)
 		free(*mem);
 	*mem = NULL;
+	printf("freeing memory\n");
 }
 
 static char	*find_leftovers(char *remain, char *temp, size_t size)
@@ -87,7 +88,7 @@ static char	*read_file(char *remain, char *temp, int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (free_mem(&buffer), NULL);
+			return (printf("error\n"), free_mem(&buffer), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(remain, buffer);
 		if (!temp)
@@ -108,7 +109,7 @@ char	*get_next_line(int fd)
 	char		*temp;
 	char		*line;
 
-	if (read(fd, NULL, 0) == -1 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!remain)
 		remain = ft_calloc(1, sizeof(char));
@@ -136,7 +137,7 @@ int main(void)
 	count = 0;
 	while (true)
 	{
-			gnl = get_next_line(fd);
+			gnl = get_next_line(42);
 			if (gnl == NULL)
 				break;
 			count++;

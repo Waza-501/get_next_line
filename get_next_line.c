@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/20 14:53:09 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/26 17:11:20 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*find_line(char *remain)
 	int		i;
 
 	i = 0;
-	while (remain[i] != '\n' && remain[i] != '\0')
+	while (remain[i] != '\n' && remain[i] != '\0' && remain != NULL)
 		i++;
 	if (remain[i] == '\n' || remain[i] != '\0')
 		i++;
@@ -95,7 +95,9 @@ static char	*read_file(char *remain, char *buffer, int fd)
 			break ;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
-	if (bytes_read < 0 && !remain && remain[0] == '\0')
+	if (bytes_read == 0 && !remain && remain[0] == '\0')
+		return (free_mem(&remain), NULL);
+	else if (bytes_read < 0)
 		return (free_mem(&remain), NULL);
 	return (remain);
 }
@@ -146,7 +148,7 @@ char	*get_next_line(int fd)
 	if (!ft_strchr(remain, '\n'))
 		remain = read_file(remain, temp, fd);
 	free(temp);
-	if (remain == NULL || remain[0] == '\0')
+	if (!remain || remain[0] == '\0')
 		return (free_mem(&remain), NULL);
 	line = find_line(remain);
 	if (!line)
@@ -167,7 +169,10 @@ char	*get_next_line(int fd)
 // 	{
 // 		gnl = get_next_line(42);
 // 		if (gnl == NULL)
+// 		{
+// 			printf("broke\n");
 // 			break;
+// 		}
 // 		count++;
 // 		printf("[%d]%s", count, gnl);
 // 		free(gnl);

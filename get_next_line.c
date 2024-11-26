@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/26 17:11:20 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/11/26 19:58:51 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static char	*find_leftovers(char *remain, char *temp, size_t size)
 	}
 	free_mem(&remain);
 	remain = ft_strjoin("", temp);
+	if (!remain)
+		return (free_mem(&temp), NULL);
 	free_mem(&temp);
 	return (remain);
 }
@@ -90,6 +92,8 @@ static char	*read_file(char *remain, char *buffer, int fd)
 			return (free_mem(&remain), NULL);
 		free_mem(&remain);
 		remain = ft_strjoin("", temp);
+		if (!remain)
+			return (free_mem(&temp), NULL);
 		free_mem(&temp);
 		if (ft_strchr(remain, '\n'))
 			break ;
@@ -163,14 +167,14 @@ char	*get_next_line(int fd)
 // 	int	count;
 // 	char *gnl;
 
-// 	fd = open("dracula.txt", O_RDONLY);
+// 	fd = open("multiple_nl.txt", O_RDONLY);
 // 	count = 0;
 // 	while (true)
 // 	{
-// 		gnl = get_next_line(42);
+// 		gnl = get_next_line(fd);
 // 		if (gnl == NULL)
 // 		{
-// 			printf("broke\n");
+// 			//printf("broke\n");
 // 			break;
 // 		}
 // 		count++;

@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/26 19:58:51 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/12/02 15:11:42 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*find_leftovers(char *remain, char *temp, size_t size)
 	}
 	temp = ft_calloc(ft_strlen(remain) - size + 1, sizeof(char));
 	if (!temp)
-		return (NULL);
+		return (printf("FL broke\n"), NULL);
 	i = 0;
 	while (remain[size] != '\0')
 	{
@@ -57,7 +57,9 @@ static char	*find_line(char *remain)
 	int		i;
 
 	i = 0;
-	while (remain[i] != '\n' && remain[i] != '\0' && remain != NULL)
+	if (!remain)
+		return (NULL);
+	while (remain[i] != '\n' && remain[i] != '\0')
 		i++;
 	if (remain[i] == '\n' || remain[i] != '\0')
 		i++;
@@ -86,6 +88,7 @@ static char	*read_file(char *remain, char *buffer, int fd)
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
+		//printf("yippy\n");
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(remain, buffer);
 		if (!temp)
@@ -140,24 +143,36 @@ char	*get_next_line(int fd)
 	char		*temp;
 	char		*line;
 
+	//printf("start\n");
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	//printf("checkpoint -1\n");
 	if (!remain)
 		remain = ft_calloc(1, sizeof(char));
+	//printf("checkpoint 0\n");
 	if (!remain)
-		return (NULL);
-	temp = malloc(BUFFER_SIZE + 1);
+		return (printf("no remain\n"), NULL);
+	//printf("checkpoint 1\n");
+	//temp = malloc(BUFFER_SIZE + 1);
+	temp = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!temp)
-		return (free_mem(&remain), NULL);
+		return (printf("no temp\n"), free_mem(&remain), NULL);
+	//printf("checkpoint 2\n");
 	if (!ft_strchr(remain, '\n'))
 		remain = read_file(remain, temp, fd);
 	free(temp);
+	//printf("checkpoint 3\n");
 	if (!remain || remain[0] == '\0')
-		return (free_mem(&remain), NULL);
+		return (printf("no remain 2\n"), free_mem(&remain), printf("post free\n"), NULL);
+	//printf("checkpoint 4\n");
 	line = find_line(remain);
+	//printf("checkpoint 5\n");
 	if (!line)
-		return (free_mem(&remain), NULL);
+		return (printf("no line\n"), free_mem(&remain), NULL);
+	//printf("checkpoint 6\n");
 	remain = find_leftovers(remain, temp, ft_strlen(line));
+	if (!remain)
+		printf("no remain 3\n");
 	return (line);
 }
 
@@ -174,7 +189,7 @@ char	*get_next_line(int fd)
 // 		gnl = get_next_line(fd);
 // 		if (gnl == NULL)
 // 		{
-// 			//printf("broke\n");
+// 			printf("broke\n");
 // 			break;
 // 		}
 // 		count++;

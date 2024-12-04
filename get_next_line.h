@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:58:05 by owen          #+#    #+#                 */
-/*   Updated: 2024/11/20 14:28:06 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/12/04 13:34:07 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 void	free_mem(char **mem);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
+int		nl_checker(const char *s);
 char	*ft_strchr(const char *s, int c);
 void	*ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);

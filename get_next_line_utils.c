@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:19 by owen          #+#    #+#                 */
-/*   Updated: 2024/12/02 13:37:04 by owhearn       ########   odam.nl         */
+/*   Updated: 2024/12/04 13:33:34 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,20 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	combine[size] = '\0';
 	return (combine);
+}
+
+int		nl_checker(const char *str)
+{
+	int		i;
+
+	i = 0;
+	if (!str)
+		return (-1);
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		return (1);
+	return (0);
 }
 
 char	*ft_strchr(const char *s, int c)

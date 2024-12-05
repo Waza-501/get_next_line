@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:19 by owen          #+#    #+#                 */
-/*   Updated: 2024/12/04 13:33:34 by owen          ########   odam.nl         */
+/*   Updated: 2024/12/04 16:27:24 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,25 @@ size_t	ft_strlen(const char *s)
 	while (*s && s[tally])
 		tally++;
 	return (tally);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*copy;
+	int		tally;
+
+	//copy = malloc(ft_strlen(s1) + 1);
+	copy = ft_calloc(ft_strlen(s1) + 1, sizeof(char));
+	if (!copy)
+		return (NULL);
+	tally = 0;
+	while (s1[tally] != '\0')
+	{
+		copy[tally] = s1[tally];
+		++tally;
+	}
+	copy[tally] = '\0';
+	return (copy);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -62,43 +81,44 @@ int		nl_checker(const char *str)
 	return (0);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
+// char	*ft_strchr(const char *s, int c)
+// {
+// 	int		i;
+//
+// 	i = 0;
+// 	if (!s)
+// 		return (NULL);
+// 	while (s[i] && s[i] != '\0')
+// 	{
+// 		if (s[i] == (unsigned char)c)
+// 			return ((char *)s + i);
+// 		i++;
+// 	}
+// 	if (s[i] == (unsigned char)c)
+// 		return ((char *)s + i);
+// 	return (NULL);
+// }
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i] && s[i] != '\0')
-	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)s + i);
-		i++;
-	}
-	if (s[i] == (unsigned char)c)
-		return ((char *)s + i);
-	return (NULL);
-}
-
-void	*ft_bzero(void *s, size_t n)
-{
-	char	*temp;
-	size_t	tally;
-
-	temp = (char *)s;
-	tally = 0;
-	while (tally < n)
-	{
-		temp[tally] = '\0';
-		tally++;
-	}
-	return (NULL);
-}
+// void	*ft_bzero(void *s, size_t n)
+// {
+// 	char	*temp;
+// 	size_t	tally;
+//
+// 	temp = (char *)s;
+// 	tally = 0;
+// 	while (tally < n)
+// 	{
+// 		temp[tally] = '\0';
+// 		tally++;
+// 	}
+// 	return (NULL);
+// }
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*new;
 	size_t	check;
+	size_t	i;
 
 	if (nmemb != 0 && size != 0)
 	{
@@ -109,6 +129,11 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	new = (char *)malloc(nmemb * size);
 	if (!new)
 		return (NULL);
-	ft_bzero(new, nmemb * size);
+	i = 0;;
+	while (i < nmemb * size)
+	{
+		new[i] = '\0';
+		i++;
+	}
 	return (new);
 }

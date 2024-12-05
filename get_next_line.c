@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 09:57:15 by owen          #+#    #+#                 */
-/*   Updated: 2024/12/04 14:02:21 by owen          ########   odam.nl         */
+/*   Updated: 2024/12/04 18:17:08 by owen          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,18 @@ static char	*find_leftovers(char *remain, char *temp, size_t size)
 	int		i;
 
 	if (remain[size] == '\0')
-	{
-		free_mem(&remain);
-		return (NULL);
-	}
+		return (free_mem(&remain), NULL);
 	temp = ft_calloc(ft_strlen(remain) - size + 1, sizeof(char));
 	if (!temp)
 		return (NULL);
 	i = 0;
-	while (remain[size] != '\0')
+	while (remain[size + i])
 	{
-		temp[i] = remain[size];
+		temp[i] = remain[size + i];
 		i++;
-		size++;
 	}
 	free_mem(&remain);
-	remain = ft_strjoin("", temp);
+	remain = ft_strdup(temp);
 	if (!remain)
 		return (free_mem(&temp), NULL);
 	free_mem(&temp);
@@ -85,7 +81,6 @@ static char	*read_file(char *remain, char *buffer, int fd)
 	char	*temp;
 	int		bytes_read;
 
-	//bytes_read = read(fd, buffer, BUFFER_SIZE);
 	bytes_read = 1;
 	while (bytes_read > 0 && nl_checker(remain) == 0)
 	{
@@ -93,16 +88,14 @@ static char	*read_file(char *remain, char *buffer, int fd)
 		if (bytes_read == -1)
 			return (free_mem(&remain), NULL);
 		buffer[bytes_read] = '\0';
-		temp = ft_strjoin(remain, buffer);
+		temp = ft_strdup(remain);
 		if (!temp)
 			return (free_mem(&remain), NULL);
 		free_mem(&remain);
-		remain = ft_strjoin("", temp);
+		remain = ft_strjoin(temp, buffer);
 		free_mem(&temp);
 		if (!remain)
 			return (NULL);
-		if (nl_checker(remain))
-			break ;
 	}
 	// if (bytes_read == 0 && (!remain || remain[0] == '\0'))
 	// 	return (free_mem(&remain), NULL);
@@ -145,32 +138,25 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 
-	//printf("start\n");
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	//printf("checkpoint -1\n");
 	if (!remain)
 		remain = ft_calloc(1, sizeof(char));
-	//printf("checkpoint 0\n");
 	if (!remain)
 		return (NULL);
-	//printf("checkpoint 1\n");
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
 		return (free_mem(&remain), NULL);
-	//printf("checkpoint 2\n");
-	if (nl_checker(remain) <= 0)
-		remain = read_file(remain, buffer, fd);
+	// if (nl_checker(remain) <= 0)
+	// 	remain = read_file(remain, buffer, fd);
+	remain = read_file(remain, buffer, fd);
 	free_mem(&buffer);
-	//printf("checkpoint 3\n");
+	//printf("test%stestbutafterfree\n", buffer);
 	if (!remain || remain[0] == '\0') 
 		return (free_mem(&remain), NULL);
-	//printf("checkpoint 4\n");
 	line = find_line(remain);
-	//printf("checkpoint 5\n");
 	if (!line)
 		return (free_mem(&remain), NULL);
-	//printf("checkpoint 6\n");
 	remain = find_leftovers(remain, buffer, ft_strlen(line));
 	return (line);
 }
